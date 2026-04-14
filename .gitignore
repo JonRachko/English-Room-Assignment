@@ -97,3 +97,8 @@ InitTestScene*.unity*
 
 # Auto-generated scenes by play mode tests
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
+/English Room Assignment/Library
+/English Room Assignment/Temp
+/English Room Assignment/UserSettings/Layouts
+/English Room Assignment/UserSettings
+/English Room Assignment/.idea
