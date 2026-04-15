@@ -7,7 +7,7 @@ public class PlayerStatsHandler : MonoBehaviour
 
     private void Start()
     {
-        
+        GameEventManager.TriggerStatsChanged(stats);
     }
 
     void OnItemEquipped(IEquipment item)
@@ -18,6 +18,8 @@ public class PlayerStatsHandler : MonoBehaviour
         stats.strength += item.Definition.statModifiers.strength;
         stats.height += item.Definition.statModifiers.height;
         stats.magicPower += item.Definition.statModifiers.magicPower;
+        
+        GameEventManager.TriggerStatsChanged(stats);
     }
     
     void OnItemUnequipped(IEquipment item)
@@ -28,5 +30,7 @@ public class PlayerStatsHandler : MonoBehaviour
         stats.strength -= item.Definition.statModifiers.strength;
         stats.height -= item.Definition.statModifiers.height;
         stats.magicPower -= item.Definition.statModifiers.magicPower;
+        
+        GameEventManager.TriggerStatsChanged(stats);
     }
 }

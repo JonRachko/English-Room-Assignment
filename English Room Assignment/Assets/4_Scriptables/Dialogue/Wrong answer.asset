@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fcd6b2b2a5a5e641a7056c49dfd484f, type: 3}
+  m_Name: Wrong answer
+  m_EditorClassIdentifier: Assembly-CSharp::ShopkeepDialogue_Def
+  shopkeepText: 'No, that''s not that...
+
+    Want to start over?'
+  playerLines:
+  - text: Yes, I'm definitely gonna get it this time!
+    dialogueDef: {fileID: 11400000, guid: 7ff8f7811e6f62a46891e916d5bcca8a, type: 2}
+    isGoodbye: 0
+  - text: No thanks, I'll just browse instead
+    dialogueDef: {fileID: 11400000, guid: 6a47aeff3dc3a5841b165e9d7f6327f4, type: 2}
+    isGoodbye: 0
+  - text: No way I'm getting these right. I'm going home.
+    dialogueDef: {fileID: 0}
+    isGoodbye: 1

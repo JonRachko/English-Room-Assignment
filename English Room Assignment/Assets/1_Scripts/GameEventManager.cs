@@ -11,4 +11,7 @@ public static class GameEventManager
     
     public static Action<IEquipment> OnUnequipped;
     public static void TriggerItemUnequipped(IEquipment item) => OnUnequipped?.Invoke(item);
+    
+    public static Action<PlayerStats> OnStatsChanged;
+    public static void TriggerStatsChanged(PlayerStats newStats) => OnStatsChanged?.Invoke(newStats); 
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class StoreManager : MonoBehaviour
@@ -12,6 +13,11 @@ public class StoreManager : MonoBehaviour
     [SerializeField] EquipmentStoreItem itemPrefab;
     [SerializeField] Transform itemContainer;
     List<EquipmentStoreItem> items = new();
+    
+    [SerializeField] ShopkeepDialogueManager dialogueManager;
+    [SerializeField] ShopkeepDialogue_Def welcomeDialogue;
+    
+    [SerializeField] TMP_Text fundsText;
 
     private void Start()
     {
@@ -19,6 +25,14 @@ public class StoreManager : MonoBehaviour
         
         SubscribeToEvents();
         InitializeItems(); 
+        
+        OpenShop();
+    }
+
+    public void OpenShop()
+    {
+        UpdateFundsText();
+        dialogueManager.ApplyDialogue(welcomeDialogue);
     }
 
     void InitializeItems()
@@ -35,11 +49,35 @@ public class StoreManager : MonoBehaviour
     {
         funds -= item.itemPrice;
         boughtItems.Add(item.itemName);
+        
+        UpdateItems();
+        UpdateFundsText();
+    }
+
+
+    public void GainFunds(int amount)
+    {
+        funds += amount;
+        UpdateItems();
+        UpdateFundsText();
+    }
+
+    void UpdateItems()
+    {
         foreach (var storeItem in items)
         {
             storeItem.UpdateButton();
         }
     }
+    void UpdateFundsText()
+    {
+        fundsText.text = $"{funds}$";
+    }
+    public void CloseShop()
+    {
+        //Close Shop
+    }
+
     
     void SubscribeToEvents()
     {

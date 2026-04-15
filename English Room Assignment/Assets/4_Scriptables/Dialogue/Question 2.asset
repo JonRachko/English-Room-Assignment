@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fcd6b2b2a5a5e641a7056c49dfd484f, type: 3}
+  m_Name: Question 2
+  m_EditorClassIdentifier: Assembly-CSharp::ShopkeepDialogue_Def
+  shopkeepText: 'Great! On to question 2!
+
+    Explain the Single Responsibility
+    Principle in your own words. How would you extend your system to support new
+    stat types without rewriting existing code?'
+  playerLines:
+  - text: '"With single strength comes single responsibility"'
+    dialogueDef: {fileID: 11400000, guid: d5496909d1f339c4294b2d60c601766c, type: 2}
+    isGoodbye: 0
+  - text: There's no such thing, you're trying to trick me!
+    dialogueDef: {fileID: 11400000, guid: d5496909d1f339c4294b2d60c601766c, type: 2}
+    isGoodbye: 0
+  - text: The Single Responsibility Principle dictates that every class should only
+      be in charge of one thing. For example, a PlayerInputManager will be in charge
+      of registering input, while a PlayerMovementController will move the player
+      character, using functions called by the input manager. If I want to add more
+      functionality, for example an animation, I will create a new PlayerAnimationController
+      script, that will only manage the animations of the player character (triggered
+      by input).
+    dialogueDef: {fileID: 11400000, guid: 08c5d30f7531f0347b2efce6b4013d6d, type: 2}
+    isGoodbye: 0
+  payout: 50

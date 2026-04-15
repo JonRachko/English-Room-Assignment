@@ -17,6 +17,7 @@ public class EquipmentStoreItem : MonoBehaviour
         this.definition = definition;
         icon.sprite = definition.itemIcon;
         itemName.text = definition.itemName;
+        gameObject.name = definition.itemName;
         UpdateButton();
         
         buyButton.onClick.AddListener(()=>GameEventManager.TriggerItemBought(definition));
