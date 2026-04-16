@@ -2,15 +2,20 @@ using UnityEngine;
 
 public class PlayerAnimationManager : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    [SerializeField] Animator animator;
+    bool moving = false;
 
-    // Update is called once per frame
-    void Update()
+    public void UpdateMovement(Vector2 movement)
     {
-        
+        if(movement == Vector2.zero && moving)
+        {
+            animator.SetBool("Moving", false);
+            moving = false;
+        }
+        else if(movement != Vector2.zero && !moving)
+        {
+            animator.SetBool("Moving", true);
+            moving = true;
+        }
     }
 }

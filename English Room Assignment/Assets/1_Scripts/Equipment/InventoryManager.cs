@@ -9,6 +9,7 @@ public class InventoryManager : MonoBehaviour
    [SerializeField] InventoryItem inventoryItemPrefab;
    [SerializeField] Transform inventoryContainer;
    [SerializeField] PlayerStatsView playerStatsView;
+   [SerializeField] StoreManager storeManager;
 
    private List<InventoryItem> items = new();
    bool inventoryOpen = false;
@@ -65,6 +66,9 @@ public class InventoryManager : MonoBehaviour
          inventoryOpen = true;
       });
       playerStatsView?.ShowStats();
+      storeManager?.CloseShop();
+      
+      PlayerInputManager.lockMovement = true;
    }
 
    void HideInventory()
@@ -74,6 +78,8 @@ public class InventoryManager : MonoBehaviour
          inventoryCanvas.blocksRaycasts = false;
          inventoryOpen = false;
       });
+      
       playerStatsView?.HideStats();
+      PlayerInputManager.lockMovement = false;
    }
 }

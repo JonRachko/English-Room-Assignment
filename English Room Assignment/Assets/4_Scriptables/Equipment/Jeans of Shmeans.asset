@@ -20,7 +20,7 @@ MonoBehaviour:
   statModifiers:
     health: 25
     mana: 25
-    moveSpeed: -5
+    moveSpeed: -0.5
     strength: 0
     height: 0
     magicPower: 0

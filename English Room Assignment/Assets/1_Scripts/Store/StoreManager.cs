@@ -30,8 +30,6 @@ public class StoreManager : MonoBehaviour
         
         SubscribeToEvents();
         InitializeItems(); 
-        
-        OpenShop();
     }
 
     public void OpenShop()
@@ -40,6 +38,7 @@ public class StoreManager : MonoBehaviour
         dialogueManager.ApplyDialogue(welcomeDialogue);
         canvasGroup.DOFade(1, 0.25f).OnComplete(() => canvasGroup.blocksRaycasts = true);
         playerStatsView?.ShowStats();
+        PlayerInputManager.lockMovement = true;
     }
 
     void InitializeItems()
@@ -87,6 +86,7 @@ public class StoreManager : MonoBehaviour
         canvasGroup.blocksRaycasts = false;
         canvasGroup.DOFade(0, 0.25f);
         playerStatsView?.HideStats();
+        PlayerInputManager.lockMovement = false;
     }
     
     void SubscribeToEvents()
