@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
@@ -16,12 +17,16 @@ public class StoreManager : MonoBehaviour
     
     [SerializeField] ShopkeepDialogueManager dialogueManager;
     [SerializeField] ShopkeepDialogue_Def welcomeDialogue;
+    [SerializeField] PlayerStatsView playerStatsView;
     
     [SerializeField] TMP_Text fundsText;
+    
+    CanvasGroup canvasGroup;
 
     private void Start()
     {
         EquipmentStoreItem.manager = this;
+        canvasGroup = GetComponent<CanvasGroup>();
         
         SubscribeToEvents();
         InitializeItems(); 
@@ -33,6 +38,8 @@ public class StoreManager : MonoBehaviour
     {
         UpdateFundsText();
         dialogueManager.ApplyDialogue(welcomeDialogue);
+        canvasGroup.DOFade(1, 0.25f).OnComplete(() => canvasGroup.blocksRaycasts = true);
+        playerStatsView?.ShowStats();
     }
 
     void InitializeItems()
@@ -52,6 +59,8 @@ public class StoreManager : MonoBehaviour
         
         UpdateItems();
         UpdateFundsText();
+        
+        PlayerEquipmentManager.Instance.AddEquipment(item);
     }
 
 
@@ -75,9 +84,10 @@ public class StoreManager : MonoBehaviour
     }
     public void CloseShop()
     {
-        //Close Shop
+        canvasGroup.blocksRaycasts = false;
+        canvasGroup.DOFade(0, 0.25f);
+        playerStatsView?.HideStats();
     }
-
     
     void SubscribeToEvents()
     {
@@ -87,5 +97,10 @@ public class StoreManager : MonoBehaviour
     void UnsubscribeFromEvents()
     {
         GameEventManager.onEquipmentBought -= OnItemBought;
+    }
+
+    private void OnDestroy()
+    {
+        UnsubscribeFromEvents();
     }
 }

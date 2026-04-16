@@ -8,29 +8,54 @@ public class PlayerStatsHandler : MonoBehaviour
     private void Start()
     {
         GameEventManager.TriggerStatsChanged(stats);
+        
+        SubscribeToEvents();
     }
 
-    void OnItemEquipped(IEquipment item)
+    private void OnDestroy()
     {
-        stats.health += item.Definition.statModifiers.health;
-        stats.mana += item.Definition.statModifiers.mana;
-        stats.moveSpeed += item.Definition.statModifiers.moveSpeed;
-        stats.strength += item.Definition.statModifiers.strength;
-        stats.height += item.Definition.statModifiers.height;
-        stats.magicPower += item.Definition.statModifiers.magicPower;
+        UnsubscribeFromEvents();
+    }
+
+    void OnItemEquipped(Equipment_Def item, EquipmentSlot slot)
+    {
+        Debug.Log("Item equipped - stats before:");
+        stats.LogStats();
+        
+        stats.health += item.statModifiers.health;
+        stats.mana += item.statModifiers.mana;
+        stats.moveSpeed += item.statModifiers.moveSpeed;
+        stats.strength += item.statModifiers.strength;
+        stats.height += item.statModifiers.height;
+        stats.magicPower += item.statModifiers.magicPower;
+        
+        Debug.Log("Item equipped - stats after:");
+        stats.LogStats();
         
         GameEventManager.TriggerStatsChanged(stats);
     }
     
-    void OnItemUnequipped(IEquipment item)
+    void OnItemUnequipped(Equipment_Def item, EquipmentSlot slot)
     {
-        stats.health -= item.Definition.statModifiers.health;
-        stats.mana -= item.Definition.statModifiers.mana;
-        stats.moveSpeed -= item.Definition.statModifiers.moveSpeed;
-        stats.strength -= item.Definition.statModifiers.strength;
-        stats.height -= item.Definition.statModifiers.height;
-        stats.magicPower -= item.Definition.statModifiers.magicPower;
+        stats.health -= item.statModifiers.health;
+        stats.mana -= item.statModifiers.mana;
+        stats.moveSpeed -= item.statModifiers.moveSpeed;
+        stats.strength -= item.statModifiers.strength;
+        stats.height -= item.statModifiers.height;
+        stats.magicPower -= item.statModifiers.magicPower;
         
         GameEventManager.TriggerStatsChanged(stats);
+    }
+
+    void SubscribeToEvents()
+    {
+        GameEventManager.OnEquipped += OnItemEquipped;
+        GameEventManager.OnUnequipped += OnItemUnequipped;
+    }
+    
+    void UnsubscribeFromEvents()
+    {
+        GameEventManager.OnEquipped -= OnItemEquipped;
+        GameEventManager.OnUnequipped -= OnItemUnequipped;
     }
 }

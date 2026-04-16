@@ -7,6 +7,8 @@ public class PlayerStatsView : MonoBehaviour
 {
     PlayerStats stats = new();
     
+    [SerializeField] private CanvasGroup canvasGroup;
+    
     [SerializeField] private TMP_Text healthText;
     [SerializeField] private TMP_Text manaText;
     [SerializeField] private TMP_Text moveSpeedText;
@@ -16,29 +18,49 @@ public class PlayerStatsView : MonoBehaviour
 
     [SerializeField] private TMP_Text healthSliderText;
     [SerializeField] private TMP_Text manaSliderText;
+    
+    Tween fadeTween;
 
-    private void Start()
+    private void Awake()
     {
         SubscribeToEvents();
     }
 
-    private void OnDestroy()
+    private void Update()
     {
-        UnsubscribeFromEvents();
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            ShowStats();
+        }
+        
+        if (Input.GetKeyUp(KeyCode.Tab))
+        {
+            HideStats();
+        }
     }
 
-    void SubscribeToEvents()
+    public void ShowStats()
     {
-        GameEventManager.OnStatsChanged += OnPlayerStatsChanged;
+        if (fadeTween != null)
+        {
+            fadeTween.Kill();
+        }
+        fadeTween = canvasGroup.DOFade(1, 0.15f);
     }
-    
-    void UnsubscribeFromEvents()
+
+    public void HideStats()
     {
-        GameEventManager.OnStatsChanged -= OnPlayerStatsChanged;
+        if(Input.GetKey(KeyCode.Tab)){return;}
+        if (fadeTween != null)
+        {
+            fadeTween.Kill();
+        }
+        fadeTween = canvasGroup.DOFade(0, 0.15f);
     }
 
     void OnPlayerStatsChanged(PlayerStats newStats)
     {
+        stats.LogStats();
         if(newStats.health != stats.health)
         {
             healthText.text = $"Health: {newStats.health.ToString()}";
@@ -76,11 +98,29 @@ public class PlayerStatsView : MonoBehaviour
             magicPowerText.text = $"Speed: {newStats.magicPower.ToString("F2")}";
             AnimateText(magicPowerText, newStats.magicPower > stats.magicPower);
         }
+        
+        stats = newStats.Clone();
+        stats.LogStats();
     }
     
     void AnimateText(TMP_Text text, bool isPositive)
     {
         text.color = isPositive ? Color.green : Color.red;
         text.DOColor(Color.white, 1f).SetEase(Ease.InCubic);
+    }
+    
+    private void OnDestroy()
+    {
+        UnsubscribeFromEvents();
+    }
+
+    void SubscribeToEvents()
+    {
+        GameEventManager.OnStatsChanged += OnPlayerStatsChanged;
+    }
+    
+    void UnsubscribeFromEvents()
+    {
+        GameEventManager.OnStatsChanged -= OnPlayerStatsChanged;
     }
 }
