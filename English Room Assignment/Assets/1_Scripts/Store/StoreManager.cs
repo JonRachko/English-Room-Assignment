@@ -20,6 +20,7 @@ public class StoreManager : MonoBehaviour
     [SerializeField] PlayerStatsView playerStatsView;
     
     [SerializeField] TMP_Text fundsText;
+    [SerializeField] GameObject pressToOpenText;
     
     CanvasGroup canvasGroup;
 
@@ -39,6 +40,7 @@ public class StoreManager : MonoBehaviour
         canvasGroup.DOFade(1, 0.25f).OnComplete(() => canvasGroup.blocksRaycasts = true);
         playerStatsView?.ShowStats();
         PlayerInputManager.lockMovement = true;
+        pressToOpenText.SetActive(false);
     }
 
     void InitializeItems()
@@ -84,7 +86,9 @@ public class StoreManager : MonoBehaviour
     public void CloseShop()
     {
         canvasGroup.blocksRaycasts = false;
-        canvasGroup.DOFade(0, 0.25f);
+        canvasGroup.DOFade(0, 0.25f)
+            .OnComplete(() => 
+                pressToOpenText.SetActive(true));
         playerStatsView?.HideStats();
         PlayerInputManager.lockMovement = false;
     }
